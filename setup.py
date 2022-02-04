@@ -5,7 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vertex2tex",
-    version="0.3.0",
+    version="0.3.1",
+    license="MIT",
     author="Steve Kieffer",
     author_email="sk@skieffer.info",
     description="VerTeX: a pre-filter for easier LaTeX",
