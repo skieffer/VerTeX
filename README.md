@@ -1,4 +1,4 @@
-# VerTeX: a prefilter for easier LaTeX
+# VerTeX: Verbal TeX
 
 Do you find anything cumbersome about TeX syntax? For example, 
 

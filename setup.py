@@ -5,11 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vertex2tex",
-    version="0.3.1",
+    version="0.3.2",
     license="MIT",
     author="Steve Kieffer",
     author_email="sk@skieffer.info",
-    description="VerTeX: a pre-filter for easier LaTeX",
+    description="VerTeX: Verbal TeX",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/skieffer/VerTeX",
