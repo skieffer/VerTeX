@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vertex2tex",
-    version="0.3.2",
+    version="0.3.3",
     license="MIT",
     author="Steve Kieffer",
     author_email="sk@skieffer.info",
