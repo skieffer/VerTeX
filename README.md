@@ -285,7 +285,11 @@ In the simplest case, `s` simply represents a subscript. It is possible however 
 switch between subscripts and superscripts using the special character sequences
 `vv`, `uu`, and `UU`.
 
-A few examples illustrate all of the ways to use these control sequences:
+NEW in Version 0.3.3: As alternatives to the character sequences
+`vv`, `uu`, and `UU`, you may also use, respectively,
+`__`, `^^`, and `^^^`.
+
+A few examples illustrate all the ways to use these control sequences:
 
 | VerTeX   | TeX       |
 |:---------|:----------|

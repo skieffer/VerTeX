@@ -355,7 +355,7 @@ letter_matcher_fonts = re.compile(opt_font_any_letter)
 r = '(%s|[0-9,+-])' % opt_font_any_letter
 sub_matcher = re.compile(r)
 
-r = '(UU|uu|vv|%s|[0-9,+-])' % opt_font_any_letter
+r = r'(UU|uu|vv|\^\^\^|\^\^|__|%s|[0-9,+-])' % opt_font_any_letter
 uusub_matcher = re.compile(r)
 
 
@@ -404,14 +404,14 @@ def autosub(s):
         def xlat(self,t):
             s = ''
 
-            if t == 'uu': s = '}^{'
-            elif t == 'UU':
+            if t in ['uu', '^^']: s = '}^{'
+            elif t in ['UU', '^^^']:
                 if self.vvcount == 0:
                     s = t
                 else:
                     self.vvcount -= 1
                     s = '}}^{'
-            elif t == 'vv':
+            elif t in ['vv', '__']:
                 # If 'vv' is the very first token, do not raise vvcount.
                 if self.state > 0: self.vvcount += 1
                 s = '_{'
@@ -509,7 +509,7 @@ class TokenStream:
 TOKEN_RE = re.compile(
     (r'\\{' +
      r'|\\[^{\s]*' +
-     r'|[A-Za-z][A-Za-z0-9+\-,]*[A-Za-z0-9]' +
+     r'|[A-Za-z](?:[A-Za-z0-9+\-,]|\^\^\^|\^\^|__)*[A-Za-z0-9]' +
      r'|#\d+' +
     "|"+"|".join(html_exceptions) +
      r'|\S' +
