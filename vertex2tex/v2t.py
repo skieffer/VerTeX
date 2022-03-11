@@ -1,4 +1,4 @@
-# VerTeX | Copyright (c) 2010-2021 Steve Kieffer | MIT license
+# VerTeX | Copyright (c) 2010-2022 Steve Kieffer | MIT license
 # SPDX-License-Identifier: MIT
 
 """
