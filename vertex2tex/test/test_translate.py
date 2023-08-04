@@ -46,6 +46,19 @@ def test_translate_2():
         assert out == expected
 
 
+def test_translate_2b():
+    """
+    Test that, with the default keychar of "@", cond_translate_snippet maps vertex to tex
+    iff the keychar appears first, or last, or both.
+    """
+    for t, expected in zip(text2, out2):
+        t = t.strip("$")
+        expected = expected.strip("$")
+        out = cond_translate_snippet(t)
+        print(out)
+        assert out == expected
+
+
 @pytest.mark.parametrize('raw, expected', [
     ['a1, a2, ddd, an+1', 'a_{1}, a_{2},\\ldots, a_{n+1}'],
     ['xivv1, xivv2, ddd, xivvm', 'x_{i_{1}}, x_{i_{2}},\\ldots, x_{i_{ m}}'],

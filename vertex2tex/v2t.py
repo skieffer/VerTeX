@@ -527,15 +527,43 @@ def compress(text):
     """
     return re.sub(r'\s+(?![a-zA-Z])', '', text)
 
-def translate_snippet(text):
+def translate_snippet(text, keychar=None):
     """
-    Translate a single "snippet" (i.e. the contents of a TeX math mode) from VerTeX into plain TeX.
+    Translate a single "snippet" (i.e. the contents of a TeX math mode) from
+    VerTeX into plain TeX.
+
+    If you have not yet checked keychars, you should pass keychar.
+
     :param text: The text of the snippet.
+    :param keychar: Must be either None or a single character (but not $ or \).
+                    Pass None if you want VerTeX to be applied directly to `text`,
+                    as is.
+                    Otherwise VerTeX is applied only when `text` begins or ends
+                    with the keychar (or both), and after stripping any
+                    occurrences of it.
     :return: The translated text.
     """
-    tokens = tokenize(text)
-    ts = TokenStream(tokens)
-    root = Node(ts)
-    out = root.xlat()
-    out = compress(out)
-    return out
+    if not text:
+        return ''
+
+    if keychar is None:
+        tokens = tokenize(text)
+        ts = TokenStream(tokens)
+        root = Node(ts)
+        out = root.xlat()
+        out = compress(out)
+        return out
+    elif text.startswith(keychar) or text.endswith(keychar):
+        text = text.strip(keychar)
+        return translate_snippet(text, keychar=None)
+    else:
+        return text
+
+
+def cond_translate_snippet(text):
+    """
+    Convenience function to translate math mode contents conditionally, i.e.
+    iff it begins or ends with the standard keychar "@" (then stripping the
+    "@" chars before translating).
+    """
+    return translate_snippet(text, keychar="@")

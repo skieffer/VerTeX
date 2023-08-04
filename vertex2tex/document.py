@@ -129,13 +129,7 @@ def translate_document(text, keychar="@"):
         # Math mode contents occur precisely on the segments of index 2 mod 4.
         if n == 2 and t:
             try:
-                if keychar is None:
-                    t = translate_snippet(t)
-                else:
-                    i0 = 1 if t[0] == keychar else 0
-                    i1 = 1 if t[-1] == keychar else 0
-                    if i0 + i1:
-                        t = translate_snippet(t[i0:len(t)-i1])
+                t = translate_snippet(t, keychar=keychar)
             except VerTeXError as ve:
                 # Note the segment where the error occurred, and re-raise.
                 ve.set_segment(seg)

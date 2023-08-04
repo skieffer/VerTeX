@@ -34,41 +34,47 @@ use as many or as few of the features of VerTeX as you wish.
 
 # Usage
 
-There are just two main functions that you'll make use of:
-`translate_snippet`, and `translate_document`.
+Translate `VerTeX --> TeX` using the `translate_snippet` function:
 
-Apply `translate_snippet` directly to math mode contents written in VerTeX,
-in order to translate them into plain TeX:
-
-    >>> from vertex2tex import *
+    >>> from vertex2tex import translate_snippet
     >>> translate_snippet('bbQ(alp)')
     '\\mathbb{Q}(\\alpha)'
 
-When working on an entire document, use `translate_document`.
-The default behavior of `translate_document` is to translate
-the contents of math modes _only if they begin or end (or both) with a `@` character
-inside the usual dollar sign delimiters_.
-(The `@` char(s) are then omitted from the output.)
-This allows you to be selective about where VerTeX is used, and where it isn't.
+You can also process an entire document with `translate_document`.
+The contents of each math mode will be
+translated *conditionally*: If the math mode begins or ends (or both) with a "@"
+character, then we translate `VerTeX --> TeX`, after stripping the "@" char(s).
 
-In particular, this means you can begin typing your math mode expressions as usual, and
-only when you're done decide if you used any VerTeX or not. If so, include a `@` before
-the final `$` or `$$`. If not, leave it out. Thus
+    >>> from vertex2tex import translate_document
+    >>> translate_document('Would you prefer $pie$ or $pie@$?')
+    'Would you prefer $pie$ or $\\pi$?'
 
-    >>> translate_document('$alp@$')
-    '$\\alpha$'
+The purpose of the indicator character "@" is to let you decide in each
+math mode whether you want to use VerTeX or not. Since it can come last
+(just before the closing "$"), you can decide after the fact whether you
+needed VerTeX or not.
 
-but
+If you are certain that you want VerTeX translation to be applied in *every*
+math mode, and don't want to have to add "@" characters, you can pass `None`
+to the `keychar` argument of `translate_document`:
 
-    >>> translate_document('$alp$')
-    '$alp$'
+    >>> translate_document('Would you like $pie$?', keychar=None)
+    'Would you like $\\pi$?'
 
-Alternatively, this behavior can be modified by using the `translate_document` function's
-keyword argument `keychar`. Setting `keychar=None` means that VerTeX translation will be
-applied to _all_ text occurring within math modes:
+Finally, with `cond_translate_snippet` you can translate a single snippet of
+math mode text, but according to the same conditional rules about "@"
+characters used by `translate_document`:
 
-    >>> translate_document('$alp$', keychar=None)
-    '$\\alpha$'
+    >>> from vertex2tex import cond_translate_snippet
+    >>> cond_translate_snippet('@alp')
+    '\\alpha'
+    >>> cond_translate_snippet('alp@')
+    '\\alpha'
+    >>> cond_translate_snippet('@alp@')
+    '\\alpha'
+    >>> cond_translate_snippet('alp')
+    'alp'
+
 
 
 # The VerTeX Language
@@ -353,7 +359,7 @@ In summary:
 
 where `w` is a word at least one character long.
 
-But you probably won't need to use this anyway. In using VerTeX for ten years,
+But you probably won't need to use this anyway. In using VerTeX for over ten years,
 I cannot recall needing it once.
 
 Enjoy!
